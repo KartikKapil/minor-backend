@@ -1,0 +1,9 @@
+from django.contrib.auth.models import User
+from django.db.models import fields
+from rest_framework import serializers
+from .models import Notes
+
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notes
+        fields = '__all__'
