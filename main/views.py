@@ -22,12 +22,14 @@ def apiOverview(request):
 	return Response(api_urls)
 
 @api_view(['GET'])
+@permission_classes((permissions.AllowAny, ))
 def NotesList(request):
 	notes = Notes.objects.all()
 	serializer = NoteSerializer(notes, many=True)
 	return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes((permissions.AllowAny, ))
 def NotesDetail(request, pk):
 	notes = Notes.objects.get(id=pk)
 	serializer = NoteSerializer(notes, many=False)
