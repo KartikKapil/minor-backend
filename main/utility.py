@@ -6,6 +6,7 @@ import random
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import confusion_matrix
+import json
 
 def show_history(h):
     epochs_trained = len(h.history['loss'])
@@ -47,6 +48,7 @@ def show_confusion_matrix(y_true, y_pred, classes):
 # 2. Creating train, validation and test sets
 # 3. Extracting tweets and labels from the examples
 
+
 def get_data():
     dataset = nlp.load_dataset('emotion')
     return dataset
@@ -63,6 +65,7 @@ def get_tweet(data):
     return tweets,label
 
 def preprocessing_data():
+    global index_to_class
     dataset = get_data()
     train = dataset['train']
     val = dataset['validation']
@@ -170,6 +173,9 @@ def preprocessing_data():
 
     model.save('main_model.h5')
 
+    with open('Work.json','w') as outfile:
+        json.dump(index_to_class,outfile)
+
 
 def test_model():
     """DO NOT RUN"""
@@ -203,14 +209,19 @@ def incoming_message(message):
     a=[]
     a.append(message)
     tokenizer = Tokenizer(num_words=10000,oov_token='<UNK>')
+    tokenizer.fit_on_texts(a)
     t=get_sequences(tokenizer,a)
+    with open('Work.json') as outfile:
+        index_to_class = json.load(outfile)
 
+    print(index_to_class)
     p = model.predict(np.expand_dims(t[0],axis=0))[0]
-    # pred_class = index_to_class[np.argmax(p).astype('uint8')]
 
-    print('predicted class',p)
+    pred_class = np.argmax(p).astype('uint8')
+
+    print('predicted class',pred_class)
 
 
-get_data()
-preprocessing_data()
+# get_data()
+# preprocessing_data()
 incoming_message("i am happy")
