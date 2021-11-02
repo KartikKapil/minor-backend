@@ -218,8 +218,8 @@ def incoming_message(message):
     p = model.predict(np.expand_dims(t[0],axis=0))[0]
 
     pred_class = np.argmax(p).astype('uint8')
-
-    print('predicted class',pred_class)
+    print(index_to_class[str(pred_class)])
+    # print('predicted class',pred_class)
 
 
 # get_data()
