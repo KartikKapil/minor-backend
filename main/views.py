@@ -5,7 +5,7 @@ from rest_framework.decorators import (
     api_view, permission_classes
 )
 from rest_framework.response import Response
-from .serializers import NoteSerializer
+from .serializers import NoteSerializer, UserSerializer
 from .models import Notes
 
 
@@ -20,6 +20,15 @@ def apiOverview(request):
 		}
 
 	return Response(api_urls)
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny, ))
+def user_register(request):
+	serializer = UserSerializer(data=request.data)
+	if serializer.is_valid():
+		serializer.save()
+		return Response(serializer.data, status=status.HTTP_201_CREATED)
+	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny, ))

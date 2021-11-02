@@ -5,3 +5,4 @@ class Notes(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     Date_of_entry = models.DateField(auto_now_add=True)
     Entry = models.TextField()
+    Emotion = models.CharField(max_length=15)
