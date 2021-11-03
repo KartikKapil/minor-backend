@@ -219,9 +219,11 @@ def incoming_message(message):
 
     pred_class = np.argmax(p).astype('uint8')
     print(index_to_class[str(pred_class)])
+
+    return index_to_class[str(pred_class)]
     # print('predicted class',pred_class)
 
 
 # get_data()
 # preprocessing_data()
-incoming_message("i am happy")
+# incoming_message("i am happy")
