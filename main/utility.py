@@ -205,20 +205,23 @@ def test_model():
 # show_confusion_matrix(test_labels,classes_x,list(classes))
 
 def incoming_message(message):
-    model = tf.keras.models.load_model('main_model.h5')
+    path = '/home/kartik/Desktop/minor/main/'
+    model_name = 'main_model.h5'
+    file_name ='Work.json'
+    model = tf.keras.models.load_model(path+model_name)
     a=[]
     a.append(message)
     tokenizer = Tokenizer(num_words=10000,oov_token='<UNK>')
     tokenizer.fit_on_texts(a)
     t=get_sequences(tokenizer,a)
-    with open('Work.json') as outfile:
+    with open(path+file_name) as outfile:
         index_to_class = json.load(outfile)
 
-    print(index_to_class)
+    # print(index_to_class)
     p = model.predict(np.expand_dims(t[0],axis=0))[0]
 
     pred_class = np.argmax(p).astype('uint8')
-    print(index_to_class[str(pred_class)])
+    # print(index_to_class[str(pred_class)])
 
     return index_to_class[str(pred_class)]
     # print('predicted class',pred_class)

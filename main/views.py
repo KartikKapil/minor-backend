@@ -4,10 +4,11 @@ from rest_framework import permissions, status
 from rest_framework.decorators import (
     api_view, permission_classes
 )
+from .utility import *
 from rest_framework.response import Response
 from .serializers import NoteSerializer, UserSerializer
 from .models import Notes
-# from .utility import incoming_message
+import datetime
 from django.contrib.auth.models import User
 
 @api_view(['POST'])
@@ -24,15 +25,37 @@ def user_register(request):
 @api_view(['POST'])
 def AddNote(request):
 	"""For adding notes"""
+
 	username = request.data.get('username')
 	user = User.objects.get(username=username)
 	Entry = request.data.get('entry')
-	# Emotion = incoming_message(Entry)
-	Emotion = 'Happy'
+	Emotion = incoming_message(Entry)
+	# Emotion = 'Happy'
 	Note = Notes(user=user, Entry=Entry, Emotion=Emotion)
 	Note.save()
-	return Response(status=200)
-	
+	data = {
+		'Username': username,
+		'Emotion': Emotion,
+	}
+	return Response(data,status=200)
+
+@api_view(['POST'])
+def GetNotes(request):
+	"""For getting notes"""
+
+	username = request.data.get('username')
+	user = User.objects.get(username=username)
+	Year = request.data.get('year')
+	Month = request.data.get('month')
+	Day = request.data.get('day')
+	print(Year,Month,Day)
+	notes = Notes.objects.filter(user=user,Date_of_entry=datetime.date(Year,Month,Day))
+	print(notes)
+	for n in notes:
+		print(n.Entry)
+	serializer = NoteSerializer(notes, many=True)
+	return Response(serializer.data, status=200)
+
 
 @api_view(['GET'])
 def NotesList(request):
