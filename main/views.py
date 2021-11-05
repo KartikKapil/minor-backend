@@ -48,11 +48,8 @@ def GetNotes(request):
 	Year = request.data.get('year')
 	Month = request.data.get('month')
 	Day = request.data.get('day')
-	print(Year,Month,Day)
 	notes = Notes.objects.filter(user=user,Date_of_entry=datetime.date(Year,Month,Day))
-	print(notes)
-	for n in notes:
-		print(n.Entry)
+	
 	serializer = NoteSerializer(notes, many=True)
 	return Response(serializer.data, status=200)
 
