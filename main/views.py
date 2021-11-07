@@ -53,6 +53,18 @@ def GetNotes(request):
 	serializer = NoteSerializer(notes, many=True)
 	return Response(serializer.data, status=200)
 
+@api_view(['POST'])
+def GetMetrics(request):
+	"""For getting metrics"""
+
+	username = request.data.get('username')
+	user = User.objects.get(username=username)
+	notes = Notes.objects.filter(user=user)
+	values = {}
+	for note in notes:
+		values[note.Emotion] = values[note.Emotion]+1 if note.Emotion in values else 1
+
+	return Response(values, status=200) 
 
 @api_view(['GET'])
 def NotesList(request):
