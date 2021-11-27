@@ -30,8 +30,9 @@ def AddNote(request):
 	user = User.objects.get(username=username)
 	Entry = request.data.get('entry')
 	Emotion = incoming_message(Entry)
+	Title = request.data.get('title')
 	# Emotion = 'Happy'
-	Note = Notes(user=user, Entry=Entry, Emotion=Emotion)
+	Note = Notes(user=user, Entry=Entry, Emotion=Emotion,Title=Title)
 	Note.save()
 	data = {
 		'Username': username,

@@ -229,4 +229,4 @@ def incoming_message(message):
 
 # get_data()
 # preprocessing_data()
-# incoming_message("i am happy")
+# print(incoming_message("i am upset"))
