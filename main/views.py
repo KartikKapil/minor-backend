@@ -55,6 +55,17 @@ def GetNotes(request):
 	return Response(serializer.data, status=200)
 
 @api_view(['POST'])
+def GetAllNotes(request):
+	"""For getting all notes"""
+
+	username = request.data.get('username')
+	user = User.objects.get(username=username)
+	notes = Notes.objects.filter(user=user)
+	serializer = NoteSerializer(notes, many=True)
+	return Response(serializer.data, status=200)
+
+
+@api_view(['POST'])
 def GetMetrics(request):
 	"""For getting metrics"""
 

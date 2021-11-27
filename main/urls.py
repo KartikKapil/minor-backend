@@ -7,5 +7,6 @@ urlpatterns = [
     path('Get-notes/',views.GetNotes,name = "Get_notes"),
     path('Get-Metrics/',views.GetMetrics,name = "Get_metrics"),
     path('notes-list/', views.NotesList,name = "notes-list"),
+    path('Get-All-notes/',views.GetAllNotes,name = "Get_all_notes"),
     path('notes-detail/<str:pk>', views.NotesDetail,name = "notes-detail"),
 ]
