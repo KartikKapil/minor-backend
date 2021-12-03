@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,6 +78,11 @@ REST_FRAMEWORK = {
 #     'JWT_RESPONSE_PAYLOAD_HANDLER': 'food_app.utils.jwt_response_handler',
 #     'JWT_VERIFY_EXPIRATION': False
 # }
+
+DEFAULTS = {
+    'ACCESS_TOKEN_LIFETIME':timedelta(days=2)
+}
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8100"
 ]
