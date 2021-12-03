@@ -79,10 +79,13 @@ REST_FRAMEWORK = {
 #     'JWT_VERIFY_EXPIRATION': False
 # }
 
-DEFAULTS = {
+# DEFAULTS = {
+#     'ACCESS_TOKEN_LIFETIME':timedelta(days=2)
+# }
+
+SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME':timedelta(days=2)
 }
-
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8100"
 ]
