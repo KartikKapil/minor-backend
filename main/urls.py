@@ -8,5 +8,6 @@ urlpatterns = [
     path('Get-Metrics/',views.GetMetrics,name = "Get_metrics"),
     path('notes-list/', views.NotesList,name = "notes-list"),
     path('Get-All-notes/',views.GetAllNotes,name = "Get_all_notes"),
+    path('Get-recommendation/',views.GetRecommendation,name = "Get_recommendation"),
     path('notes-detail/<str:pk>', views.NotesDetail,name = "notes-detail"),
 ]

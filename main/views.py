@@ -78,6 +78,25 @@ def GetMetrics(request):
 
 	return Response(values, status=200) 
 
+@api_view(['POST'])
+def GetRecommendation(request):
+	"""For getting recommendation"""
+
+	username = request.data.get('username')
+	user = User.objects.get(username=username)
+	notes = Notes.objects.filter(user=user)
+	values = {}
+	for note in notes:
+		values[note.Emotion] = values[note.Emotion]+1 if note.Emotion in values else 1
+	
+	if 'Sad' in values:
+		if(values['Sad']+values['Anger']>30):
+			return Response({'Val':'https://www.healthline.com/health/mental-health/types-of-meditation'}, status=200) 
+		else:
+			return Response({'Val':'You are Mentally healthy and currently not in need of medication'}, status=200)
+	else:
+		return Response({'Val':'You are Mentally healthy and currently not in need of medication'}, status=200)
+
 @api_view(['GET'])
 def NotesList(request):
 	notes = Notes.objects.all()
